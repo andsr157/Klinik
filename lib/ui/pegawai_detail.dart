@@ -15,7 +15,7 @@ class _PegawaiDetailState extends State<PegawaiDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail Poli'),
+        title: Text('Detail Pegawai'),
       ),
       body: Column(children: [
         SizedBox(height: 20),

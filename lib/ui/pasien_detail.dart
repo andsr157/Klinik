@@ -15,7 +15,7 @@ class _PasienDetailState extends State<PasienDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail Poli'),
+        title: Text('Detail Pasien'),
       ),
       body: Column(children: [
         SizedBox(height: 20),
