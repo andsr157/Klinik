@@ -4,6 +4,8 @@ import "package:flutter/material.dart";
 import 'poli_detail.dart';
 import '../model/poli.dart';
 import '../model/pegawai.dart';
+import 'poli_item.dart';
+import 'poli_form.dart';
 
 class PoliPage extends StatefulWidget {
   const PoliPage({super.key});
@@ -18,65 +20,31 @@ class _PoliPageState extends State<PoliPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Data Poli'),
+        actions: [
+          GestureDetector(
+            child: Padding(
+                padding: EdgeInsets.all(16.0), child: const Icon(Icons.add)),
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => PoliForm()));
+            },
+          )
+        ],
       ),
       body: ListView(
         children: [
-          GestureDetector(
-              child: Card(
-                child: ListTile(
-                  title: const Text('Poli Anak'),
-                ),
-              ),
-              onTap: () {
-                Poli poliAnak = new Poli(namaPoli: 'July Dwi Saputra');
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PoliDetail(poli: poliAnak)));
-              }),
-          Card(
-            child: ListTile(
-              title: const Text('Poli Kandungan'),
-            ),
+          PoliItem(
+            poli: Poli(namaPoli: "Poli Anak"),
           ),
-          Card(
-            child: ListTile(
-              title: const Text('Poli Gigi'),
-            ),
+          PoliItem(
+            poli: Poli(namaPoli: "Poli Kandungan"),
           ),
-          Card(
-            child: ListTile(
-              title: const Text('Poli THT'),
-            ),
+          PoliItem(
+            poli: Poli(namaPoli: "Poli Gigi"),
           ),
-          GestureDetector(
-            child: Card(
-              child: ListTile(
-                title: const Text('Pegawai'),
-              ),
-            ),
-            onTap: () {
-              Pegawai datapegawai = new Pegawai(
-                  nip: '12210979',
-                  nama: 'July',
-                  tanggal_lahir: '2 JULI 2000',
-                  nomor_telepon: '081233456789',
-                  email: 'jul@jul.jul',
-                  password: 'Lorog99');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          PegawaiDetail(pegawai: datapegawai)));
-            },
+          PoliItem(
+            poli: Poli(namaPoli: "Poli THT"),
           ),
-          GestureDetector(
-            child: Card(
-              child: ListTile(
-                title: const Text('Pasien'),
-              ),
-            ),
-          )
         ],
       ),
     );

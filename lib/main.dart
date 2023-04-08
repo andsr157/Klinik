@@ -1,3 +1,4 @@
+import 'package:belajar_fluter/ui/pegawai_page.dart';
 import 'package:flutter/material.dart';
 import 'ui/poli_page.dart';
 import 'ui/home.dart';

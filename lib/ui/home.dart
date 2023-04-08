@@ -4,6 +4,8 @@ import 'pegawai_detail.dart';
 import 'pasien_detail.dart';
 import '../model/pegawai.dart';
 import '../model/pasien.dart';
+import 'pegawai_page.dart';
+import 'pasien_page.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -38,41 +40,23 @@ class _HomeState extends State<Home> {
           GestureDetector(
             child: Card(
               child: ListTile(
-                title: const Text('Pegawai'),
+                title: const Text('Data Pegawai'),
               ),
             ),
             onTap: () {
-              Pegawai dataPegawai = new Pegawai(
-                  nip: '324513425',
-                  nama: 'Joko',
-                  tanggal_lahir: '1 januari 2000',
-                  nomor_telepon: '089123456',
-                  email: 'j@j.com',
-                  password: '1234');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          PegawaiDetail(pegawai: dataPegawai)));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PegawaiPage()));
             },
           ),
           GestureDetector(
             child: Card(
               child: ListTile(
-                title: const Text("Pasien"),
+                title: const Text("Data Pasien"),
               ),
             ),
             onTap: () {
-              Pasien datapasien = new Pasien(
-                  nomor_rm: '121',
-                  nama: 'anwar',
-                  tanggal_lahir: '28 februari 2000',
-                  nomor_telepon: '0986472525',
-                  alamat: 'Surakarta');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PasienDetail(pasien: datapasien)));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PasienPage()));
             },
           )
         ],
