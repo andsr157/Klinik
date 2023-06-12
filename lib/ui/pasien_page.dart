@@ -1,56 +1,64 @@
+import 'package:belajar_fluter/service/pasien_service.dart';
 import 'package:flutter/material.dart';
-import '../model/pasien.dart';
+import 'package:belajar_fluter/model/pasien.dart';
+import 'package:belajar_fluter/service/pasien_service.dart';
 import 'pasien_detail.dart';
-import 'pasien_item.dart';
 import 'pasien_form.dart';
+import 'pasien_item.dart';
+import '../widget/sidebar.dart';
 
 class PasienPage extends StatefulWidget {
-  const PasienPage({super.key});
-
-  @override
-  State<PasienPage> createState() => _PasienPageState();
+  const PasienPage({Key? key}) : super(key: key);
+  _PasienPageState createState() => _PasienPageState();
 }
 
 class _PasienPageState extends State<PasienPage> {
+  Stream<List<Pasien>> getList() async* {
+    List<Pasien> data = await PasienService().listData();
+    yield data;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const Sidebar(),
       appBar: AppBar(
         title: const Text("Data Pasien"),
         actions: [
           GestureDetector(
             child: const Icon(Icons.add),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PasienForm()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PasienForm()),
+              );
             },
-          )
+          ),
         ],
       ),
-      body: ListView(
-        children: [
-          PasienItem(
-              pasien: Pasien(
-                  nomor_rm: '123',
-                  nama: 'anto',
-                  tanggal_lahir: '17 agustus 1945',
-                  nomor_telepon: '09875334567',
-                  alamat: 'mars')),
-          PasienItem(
-              pasien: Pasien(
-                  nomor_rm: '124',
-                  nama: 'manto',
-                  tanggal_lahir: '19 januari 1945',
-                  nomor_telepon: '0872345611',
-                  alamat: 'venus')),
-          PasienItem(
-              pasien: Pasien(
-                  nomor_rm: '125',
-                  nama: 'rizki',
-                  tanggal_lahir: '31 desember 1945',
-                  nomor_telepon: '0853234511',
-                  alamat: 'pluto')),
-        ],
+      body: StreamBuilder(
+        stream: getList(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (!snapshot.hasData &&
+              snapshot.connectionState == ConnectionState.done) {
+            return Text('Data Kosong');
+          }
+
+          return ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              return PasienItem(pasien: snapshot.data[index]);
+            },
+          );
+        },
       ),
     );
   }

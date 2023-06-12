@@ -4,7 +4,6 @@ import 'pasien_detail.dart';
 
 class PasienItem extends StatelessWidget {
   final Pasien pasien;
-
   const PasienItem({super.key, required this.pasien});
 
   @override
@@ -12,7 +11,7 @@ class PasienItem extends StatelessWidget {
     return GestureDetector(
       child: Card(
         child: ListTile(
-          title: Text("${pasien.nama}"),
+          title: Text("${pasien.namaPasien}"),
         ),
       ),
       onTap: () {

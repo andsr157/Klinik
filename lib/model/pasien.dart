@@ -1,16 +1,11 @@
 class Pasien {
   int? id;
-  String nomor_rm;
-  String nama;
-  String tanggal_lahir;
-  String nomor_telepon;
-  String alamat;
+  String namaPasien;
 
-  Pasien(
-      {this.id,
-      required this.nomor_rm,
-      required this.nama,
-      required this.tanggal_lahir,
-      required this.nomor_telepon,
-      required this.alamat});
+  Pasien({this.id, required this.namaPasien});
+
+  factory Pasien.fromJson(Map<String, dynamic> json) =>
+      Pasien(id: json["id"], namaPasien: json["nama_pasien"]);
+
+  Map<String, dynamic> toJson() => {"nama_pasien": namaPasien};
 }

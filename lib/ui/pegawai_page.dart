@@ -1,59 +1,62 @@
 import 'package:flutter/material.dart';
-import '../model/pegawai.dart';
-import 'pegawai_detail.dart';
-import 'pegawai_item.dart';
+import 'package:belajar_fluter/model/pegawai.dart';
+import 'package:belajar_fluter/service/pegawai_service.dart';
 import 'pegawai_form.dart';
+import 'pegawai_item.dart';
+import '../widget/sidebar.dart';
 
 class PegawaiPage extends StatefulWidget {
-  const PegawaiPage({super.key});
-
-  @override
-  State<PegawaiPage> createState() => _PegawaiPageState();
+  const PegawaiPage({Key? key}) : super(key: key);
+  _PegawaiPageState createState() => _PegawaiPageState();
 }
 
 class _PegawaiPageState extends State<PegawaiPage> {
+  Stream<List<Pegawai>> getList() async* {
+    List<Pegawai> data = await PegawaiService().listData();
+    yield data;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const Sidebar(),
       appBar: AppBar(
         title: const Text("Data Pegawai"),
         actions: [
           GestureDetector(
             child: const Icon(Icons.add),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PegawaiForm()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PegawaiForm()),
+              );
             },
-          )
+          ),
         ],
       ),
-      body: ListView(
-        children: [
-          PegawaiItem(
-              pegawai: Pegawai(
-                  nip: '12',
-                  nama: 'anto',
-                  tanggal_lahir: '12 oktober  2022',
-                  nomor_telepon: '0895456721',
-                  email: 'adada',
-                  password: 'adadadad')),
-          PegawaiItem(
-              pegawai: Pegawai(
-                  nip: '12',
-                  nama: 'july',
-                  tanggal_lahir: '12 oktober  2022',
-                  nomor_telepon: '0895456721',
-                  email: 'adada',
-                  password: 'adadadad')),
-          PegawaiItem(
-              pegawai: Pegawai(
-                  nip: '12',
-                  nama: 'erpun',
-                  tanggal_lahir: '12 oktober  2022',
-                  nomor_telepon: '0895456721',
-                  email: 'adada',
-                  password: 'adadadad')),
-        ],
+      body: StreamBuilder(
+        stream: getList(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          }
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (!snapshot.hasData &&
+              snapshot.connectionState == ConnectionState.done) {
+            return Text('Data Kosong');
+          }
+
+          return ListView.builder(
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              return PegawaiItem(pegawai: snapshot.data[index]);
+            },
+          );
+        },
       ),
     );
   }

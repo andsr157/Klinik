@@ -1,15 +1,16 @@
-import '../model/pegawai.dart';
-import 'pegawai_detail.dart';
 import 'package:flutter/material.dart';
+import '../model/pegawai.dart';
 import '../service/pegawai_service.dart';
+import 'pegawai_detail.dart';
 import 'package:intl/intl.dart';
 
-class PegawaiForm extends StatefulWidget {
-  const PegawaiForm({Key? key}) : super(key: key);
-  _PegawaiFormState createState() => _PegawaiFormState();
+class PegawaiUpdateForm extends StatefulWidget {
+  final Pegawai pegawai;
+  const PegawaiUpdateForm({Key? key, required this.pegawai}) : super(key: key);
+  _PegawaiUpdateFormState createState() => _PegawaiUpdateFormState();
 }
 
-class _PegawaiFormState extends State<PegawaiForm> {
+class _PegawaiUpdateFormState extends State<PegawaiUpdateForm> {
   final _formKey = GlobalKey<FormState>();
   final _nipPegawaiCtrl = TextEditingController();
   final _namaPegawaiCtrl = TextEditingController();
@@ -18,10 +19,42 @@ class _PegawaiFormState extends State<PegawaiForm> {
   final _emailPegawaiCtrl = TextEditingController();
   final _passwdPegawaiCtrl = TextEditingController();
 
+  Future<Pegawai> getData() async {
+    Pegawai data = await PegawaiService().getById(widget.pegawai.id.toString());
+    setState(() {
+      if (data.nipPegawai != null) {
+        _nipPegawaiCtrl.text = data.nipPegawai;
+      }
+      if (data.namaPegawai != null) {
+        _namaPegawaiCtrl.text = data.namaPegawai;
+      }
+
+      if (data.lahirPegawai != null) {
+        _lahirPegawaiCtrl.text = data.lahirPegawai.toString();
+      }
+      if (data.nomorPegawai != null) {
+        _nomorPegawaiCtrl.text = data.nomorPegawai;
+      }
+      if (data.emailPegawai != null) {
+        _emailPegawaiCtrl.text = data.emailPegawai;
+      }
+      if (data.passwdPegawai != null) {
+        _passwdPegawaiCtrl.text = data.passwdPegawai;
+      }
+    });
+    return data;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Tambah Pegawai")),
+      appBar: AppBar(title: const Text("Ubah Pegawai")),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -75,8 +108,7 @@ class _PegawaiFormState extends State<PegawaiForm> {
         );
         if (selectedDate != null) {
           setState(() {
-            _lahirPegawaiCtrl.text =
-                DateFormat('yyyy-MM-dd').format(selectedDate);
+            _lahirPegawaiCtrl.text = DateFormat.yMd().format(selectedDate);
           });
         }
       },
@@ -113,18 +145,16 @@ class _PegawaiFormState extends State<PegawaiForm> {
   _tombolSimpan() {
     return ElevatedButton(
       onPressed: () async {
-        String formattedDate = DateFormat('yyyy-MM-dd')
-            .format(DateTime.parse(_lahirPegawaiCtrl.text));
-
         Pegawai pegawai = Pegawai(
             nipPegawai: _nipPegawaiCtrl.text,
             namaPegawai: _namaPegawaiCtrl.text,
-            lahirPegawai: DateTime.parse(formattedDate),
+            lahirPegawai: DateTime.parse(_lahirPegawaiCtrl.text),
             nomorPegawai: _nomorPegawaiCtrl.text,
             emailPegawai: _emailPegawaiCtrl.text,
             passwdPegawai: _passwdPegawaiCtrl.text);
-
-        await PegawaiService().simpan(pegawai).then((value) {
+        String id = widget.pegawai.id.toString();
+        await PegawaiService().ubah(pegawai, id).then((value) {
+          Navigator.pop(context);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -133,7 +163,7 @@ class _PegawaiFormState extends State<PegawaiForm> {
           );
         });
       },
-      child: const Text("Simpan"),
+      child: const Text("Simpan Perubahan"),
     );
   }
 }

@@ -4,7 +4,6 @@ import 'pegawai_detail.dart';
 
 class PegawaiItem extends StatelessWidget {
   final Pegawai pegawai;
-
   const PegawaiItem({super.key, required this.pegawai});
 
   @override
@@ -12,7 +11,7 @@ class PegawaiItem extends StatelessWidget {
     return GestureDetector(
       child: Card(
         child: ListTile(
-          title: Text("${pegawai.nama}"),
+          title: Text(pegawai.namaPegawai),
         ),
       ),
       onTap: () {
