@@ -3,6 +3,7 @@ import '../service/pasien_service.dart';
 import 'pasien_page.dart';
 import 'pasien_update_form.dart';
 import '../model/pasien.dart';
+import 'package:intl/intl.dart';
 
 class PasienDetail extends StatefulWidget {
   final Pasien pasien;
@@ -39,10 +40,30 @@ class PasienDetailState extends State<PasienDetail> {
           }
           return Column(
             children: [
+              SizedBox(height: 20),
+              Text(
+                "Nip Pasien : ${snapshot.data.nomorRmPasien}",
+                style: const TextStyle(fontSize: 20),
+              ),
               const SizedBox(height: 20),
               Text(
                 "Nama Pasien : ${snapshot.data.namaPasien}",
+                style: const TextStyle(fontSize: 20),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                "Tgl Lahir Pasien : ${DateFormat('yyyy-MM-dd').format(snapshot.data.lahirPasien!)}",
                 style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                "Nomor Telp Pasien : ${snapshot.data.nomorPasien}",
+                style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                "Email Pasien : ${snapshot.data.alamatPasien}",
+                style: const TextStyle(fontSize: 20),
               ),
               const SizedBox(height: 20),
               Row(

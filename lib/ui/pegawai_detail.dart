@@ -38,44 +38,163 @@ class PegawaiDetailState extends State<PegawaiDetail> {
               snapshot.connectionState == ConnectionState.done) {
             return Text('Data Tidak Ditemukan');
           }
-          return Column(
-            children: [
-              SizedBox(height: 20),
-              Text(
-                "Nip Pegawai : ${snapshot.data.nipPegawai}",
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(height: 20),
-              Text(
-                "Nama Pegawai : ${snapshot.data.namaPegawai}",
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(height: 20),
-              Text(
-                "Tgl Lahir Pegawai : ${DateFormat('yyyy-MM-dd').format(snapshot.data.lahirPegawai!)}",
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(height: 20),
-              Text(
-                "Nomor Telp Pegawai : ${snapshot.data.nomorPegawai}",
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(height: 20),
-              Text(
-                "Email Pegawai : ${snapshot.data.emailPegawai}",
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(height: 20),
-              Text(
-                "Password Pegawai : ${snapshot.data.passwdPegawai}",
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [_tombolUbah(), _tombolHapus()],
-              )
-            ],
+
+          return SingleChildScrollView(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Card(
+                  elevation: 4,
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Nip Pegawai",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          snapshot.data.nipPegawai,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Card(
+                  elevation: 4,
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Nama Pegawai",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          snapshot.data.namaPegawai,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Card(
+                  elevation: 4,
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Tgl Lahir Pegawai",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          DateFormat('yyyy-MM-dd')
+                              .format(snapshot.data.lahirPegawai!),
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Card(
+                  elevation: 4,
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Nomor Telp Pegawai",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          snapshot.data.nomorPegawai,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Card(
+                  elevation: 4,
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Email Pegawai",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          snapshot.data.emailPegawai,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Card(
+                  elevation: 4,
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Password Pegawai",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          "123",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [_tombolUbah(), _tombolHapus()],
+                ),
+              ],
+            ),
           );
         },
       ),

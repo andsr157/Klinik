@@ -38,9 +38,6 @@ class _PegawaiUpdateFormState extends State<PegawaiUpdateForm> {
       if (data.emailPegawai != null) {
         _emailPegawaiCtrl.text = data.emailPegawai;
       }
-      if (data.passwdPegawai != null) {
-        _passwdPegawaiCtrl.text = data.passwdPegawai;
-      }
     });
     return data;
   }
@@ -150,8 +147,7 @@ class _PegawaiUpdateFormState extends State<PegawaiUpdateForm> {
             namaPegawai: _namaPegawaiCtrl.text,
             lahirPegawai: DateTime.parse(_lahirPegawaiCtrl.text),
             nomorPegawai: _nomorPegawaiCtrl.text,
-            emailPegawai: _emailPegawaiCtrl.text,
-            passwdPegawai: _passwdPegawaiCtrl.text);
+            emailPegawai: _emailPegawaiCtrl.text);
         String id = widget.pegawai.id.toString();
         await PegawaiService().ubah(pegawai, id).then((value) {
           Navigator.pop(context);

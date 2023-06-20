@@ -19,13 +19,13 @@ class PasienService {
 
   Future<Pasien> ubah(Pasien pasien, String id) async {
     var data = pasien.toJson();
-    final Response response = await ApiClient().put('pasien/${id}', data);
+    final Response response = await ApiClient().put('pasien/$id', data);
     Pasien result = Pasien.fromJson(response.data);
     return result;
   }
 
   Future<Pasien> getById(String id) async {
-    final Response response = await ApiClient().get('pasien/${id}');
+    final Response response = await ApiClient().get('pasien/$id');
     Pasien result = Pasien.fromJson(response.data);
     return result;
   }
